@@ -1,0 +1,24 @@
+{
+  "name": "assetmanagementapi",
+  "version": "1.0.0",
+  "description": "Test to create an API to the AssestManagement database tables to be able to perform GET requests",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skyliner33v/AssetManagementAPI.git"
+  },
+  "author": "parentj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Skyliner33v/AssetManagementAPI/issues"
+  },
+  "homepage": "https://github.com/Skyliner33v/AssetManagementAPI#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "msnodesqlv8": "^0.6.12",
+    "mssql": "^4.3.0"
+  }
+}
