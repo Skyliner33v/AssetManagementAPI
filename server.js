@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 });
 
 // Define a route to the Bridge Table
-app.get('/bridge', function (req, res) {
+app.get('api/bridge/', function (req, res) {
     connection.connect().then(pool => { //Using a single connection pool is recommended
         var conn = pool.request()
         var string = 'SELECT * FROM Bridge'
