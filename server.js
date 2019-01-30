@@ -20,3 +20,11 @@ const connection = new sql.ConnectionPool(sqlConfig, function (err) {
     }
 })
 
+// define a simple route
+app.get('/', function (req, res) {
+    res.json({
+        "message": "Welcome to WSDOT AssetManagement Sample App."
+    });
+});
+
+
