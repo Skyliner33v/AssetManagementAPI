@@ -3,7 +3,7 @@ const app = express();
 const sql = require('mssql/msnodesqlv8') //mssql with MS driver for SQL Server
 // added windows authentication
 
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || 'prod02pBridgeData';
 var sqlConfig = require('./config')[env];
 
 // Start server and listen on http://localhost:8081/
@@ -72,6 +72,26 @@ app.get('/api/inspections', function (req, res) {
     connection.connect().then(pool => { //Using a single connection pool is recommended
         var conn = pool.request()
         var string = 'SELECT TOP 100 * FROM INSPEVNT'
+        return conn.query(string)
+    }).then(result => {
+        let rows = result.recordset
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.status(200).json(rows);
+        connection.close();
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send({
+            message: err
+        })
+        connection.close();
+    });
+});
+
+// Define a route to the BridgeData/tblMaster Table
+app.get('/api/tblMaster', function (req, res) {
+    connection.connect().then(pool => { //Using a single connection pool is recommended
+        var conn = pool.request()
+        var string = 'SELECT TOP 100 * FROM tblMaster'
         return conn.query(string)
     }).then(result => {
         let rows = result.recordset
