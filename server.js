@@ -3,7 +3,7 @@ const app = express();
 const sql = require('mssql/msnodesqlv8') //mssql with MS driver for SQL Server
 // added windows authentication
 
-var env = process.env.NODE_ENV || 'prod02pBridgeData';
+var env = process.env.NODE_ENV || 'testLocalAssetManagement';
 var sqlConfig = require('./config')[env];
 
 // Start server and listen on http://localhost:8081/
@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 });
 
 // Define a route to the Bridge Table
-app.get('/api/bridge', function (req, res) {
+app.get('/api/bridges', function (req, res) {
     connection.connect().then(pool => { //Using a single connection pool is recommended
         var conn = pool.request()
         var string = 'SELECT * FROM Bridge'
