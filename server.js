@@ -21,6 +21,14 @@ var server = app.listen(8081, function () {
 });
 
 
+//Setup up the connection pool
+const pool = new sql.ConnectionPool(sqlConfig, function(err){
+    if (err){
+    console.log(err);
+    }
+});
+
+
 // Define the root route
 app.get('/', function (req, res) {
     res.json({
@@ -106,20 +114,24 @@ app.get('/api/elementData', async (req, res) => {
 
 //Define route to the TRANSACTIONS Table to log POST requests
 app.post('/api/transactions', async (req, res) => {
+
+    //Ensures that the pool has been created
+    await pool;
     try {
         //Request a new connection
-        let pool = await sql.connect(sqlConfig);
+        let request = pool.request();
 
         //Submit a new request passing the following query to Insert the data into the database
         //Inputs are sanitized against SQL Injection
-        let result = await pool.request()
-            .input('tableName', req.body.tableName)
-            .input('numRows', req.body.numRows)
+        let result = request
+            .input('tableName', sql.NVarChar, req.body.tableName)
+            .input('apiType', sql.NVarChar, req.body.apiType)
+            .input('numRows', sql.Int, req.body.numRows)
             .input('datePosted', sql.DateTime, req.body.datePosted)
-            .query('INSERT INTO [apiTransactions] (tableName, numRows, datePosted) VALUES (@tableName, @numRows, @datePosted)');
+            .query('INSERT INTO [apiTransactions] (tableName, apiType, numRows, datePosted) VALUES (@tableName, @apiType, @numRows, @datePosted)');
 
         //Sends the response data as JSON to the user
-        res.send("POST Success!" );
+        res.send("POST Success!");
 
     } catch (err) {
         res.status(500).send("Error Caught:" + err.message);
