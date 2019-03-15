@@ -26,7 +26,7 @@ const pool = new sql.ConnectionPool(sqlConfig, function(err){
     if (err){
     console.log(err);
     }
-});
+}); 
 
 
 // Define the root route
@@ -39,13 +39,15 @@ app.get('/', function (req, res) {
 
 //Define route to the BRIDGE Table
 app.get('/api/bridges', async (req, res) => {
+
+    //Ensures that the pool has been created
+    await pool;
     try {
         //Request a new connection
-        let pool = await sql.connect(sqlConfig);
+        let request = pool.request();
 
         //Submit a new request passing the following query
-        let result = await pool.request()
-            .query('SELECT * FROM [BRIDGE]');
+        let result = await request.query('SELECT * FROM [BRIDGE]');
 
         //Sends the response data as JSON to the user
         res.json(result.recordset);
@@ -58,13 +60,15 @@ app.get('/api/bridges', async (req, res) => {
 
 //Define route to the ROADWAY Table
 app.get('/api/roadway', async (req, res) => {
+
+    //Ensures that the pool has been created
+    await pool;
     try {
         //Request a new connection
-        let pool = await sql.connect(sqlConfig);
+        let request = pool.request();
 
         //Submit a new request passing the following query
-        let result = await pool.request()
-            .query('SELECT * FROM [ROADWAY]');
+        let result = await request.query('SELECT * FROM [ROADWAY]');
 
         //Sends the response data as JSON to the user
         res.json(result.recordset);
@@ -77,13 +81,15 @@ app.get('/api/roadway', async (req, res) => {
 
 //Define route to the INSPEVNT Table
 app.get('/api/inspections', async (req, res) => {
+
+    //Ensures that the pool has been created
+    await pool;
     try {
-        //Request a new connection
-        let pool = await sql.connect(sqlConfig);
+            //Request a new connection
+            let request = pool.request();
 
         //Submit a new request passing the following query
-        let result = await pool.request()
-            .query('SELECT * FROM [INSPEVNT]');
+        let result = await request.query('SELECT * FROM [INSPEVNT]');
 
         //Sends the response data as JSON to the user
         res.json(result.recordset);
@@ -96,13 +102,15 @@ app.get('/api/inspections', async (req, res) => {
 
 //Define route to the PON_ELEM_INSP Table
 app.get('/api/elementData', async (req, res) => {
+    
+    //Ensures that the pool has been created
+    await pool;
     try {
         //Request a new connection
-        let pool = await sql.connect(sqlConfig);
+        let request = pool.request();
 
         //Submit a new request passing the following query
-        let result = await pool.request()
-            .query('SELECT * FROM [PON_ELEM_INSP]');
+        let result = await request.query('SELECT * FROM [PON_ELEM_INSP]');
 
         //Sends the response data as JSON to the user
         res.json(result.recordset);
@@ -123,7 +131,7 @@ app.post('/api/transactions', async (req, res) => {
 
         //Submit a new request passing the following query to Insert the data into the database
         //Inputs are sanitized against SQL Injection
-        let result = request
+        let result = await request
             .input('tableName', sql.NVarChar, req.body.tableName)
             .input('apiType', sql.NVarChar, req.body.apiType)
             .input('numRows', sql.Int, req.body.numRows)
