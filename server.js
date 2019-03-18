@@ -133,13 +133,13 @@ app.post('/api/transactions', async (req, res) => {
         //Inputs are sanitized against SQL Injection
         let result = await request
             .input('tableName', sql.NVarChar, req.body.tableName)
-            .input('apiType', sql.NVarChar, req.body.apiType)
+            .input('apiRequestType', sql.NVarChar, req.body.apiRequestType)
             .input('numRows', sql.Int, req.body.numRows)
             .input('datePosted', sql.DateTime, req.body.datePosted)
-            .query('INSERT INTO [apiTransactions] (tableName, apiType, numRows, datePosted) VALUES (@tableName, @apiType, @numRows, @datePosted)');
+            .query('INSERT INTO [apiTransactions] (tableName, apiRequestType, numRows, datePosted) VALUES (@tableName, @apiRequestType, @numRows, @datePosted)');
 
         //Sends the response data as JSON to the user
-        res.send("POST Success!");
+        res.status(200).send("POST Success!");
 
     } catch (err) {
         res.status(500).send("Error Caught:" + err.message);
