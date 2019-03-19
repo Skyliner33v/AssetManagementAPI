@@ -57,6 +57,26 @@ app.get('/api/bridges', async (req, res) => {
     };
 });
 
+//Define route to the STRUCTURE UNIT Table
+app.get('/api/structureUnit', async (req, res) => {
+
+    //Ensures that the pool has been created
+    await pool;
+    try {
+        //Request a new connection
+        let request = pool.request();
+
+        //Submit a new request passing the following query
+        let result = await request.query('SELECT * FROM [STRUCTURE_UNIT]');
+
+        //Sends the response data as JSON to the user
+        res.json(result.recordset);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    };
+});
+
 
 //Define route to the ROADWAY Table
 app.get('/api/roadway', async (req, res) => {
@@ -142,6 +162,6 @@ app.post('/api/transactions', async (req, res) => {
         res.status(200).send("POST Success!");
 
     } catch (err) {
-        res.status(500).send("Error Caught:" + err.message);
+        console.error(err.message);
     };
 });
