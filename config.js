@@ -5,7 +5,7 @@ var config = {
     },
     TEST: {
         driver: 'msnodesqlv8',
-        connectionString: 'Driver={SQL Server Native Client 11.0};Server={HQOLYMBRGSQL02T};Database={AssetManagement};Trusted_Connection={yes};'
+        connectionString: 'Driver={SQL Server Native Client 11.0};Server={HQOLYMBRGSQL02T};Database={StructureAssetManagement};Trusted_Connection={yes};'
     },
     PRODUCTION: {
         driver: 'msnodesqlv8',

@@ -10,7 +10,7 @@ app.use(express.json());
 
 //Use configuration from config.js
 //Change env string to switch between 'LOCAL', 'TEST', 'PRODUCTION' configurations
-var env = process.env.NODE_ENV || 'LOCAL';
+var env = process.env.NODE_ENV || 'TEST';
 var sqlConfig = require('./config')[env];
 
 
