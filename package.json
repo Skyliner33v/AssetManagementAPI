@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Skyliner33v/AssetManagementAPI#readme",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "msnodesqlv8": "^0.6.12",
     "mssql": "^4.3.0"
   }

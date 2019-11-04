@@ -154,9 +154,10 @@ app.post('/api/transactions', async (req, res) => {
         let result = await request
             .input('tableName', sql.NVarChar, req.body.tableName)
             .input('apiRequestType', sql.NVarChar, req.body.apiRequestType)
+            .input('status', sql.NVarChar, req.body.status)
             .input('numRows', sql.Int, req.body.numRows)
             .input('datePosted', sql.DateTime, req.body.datePosted)
-            .query('INSERT INTO [apiTransactions] (tableName, apiRequestType, numRows, datePosted) VALUES (@tableName, @apiRequestType, @numRows, @datePosted)');
+            .query('INSERT INTO [apiTransactions] (tableName, apiRequestType, status, numRows, datePosted) VALUES (@tableName, @apiRequestType, @status, @numRows, @datePosted)');
 
         //Sends the response data as JSON to the user
         res.status(200).send("POST Success!");
