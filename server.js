@@ -10,7 +10,7 @@ app.use(express.json());
 
 //Use configuration from config.js
 //Change env string to switch between 'LOCAL', 'TEST', 'PRODUCTION' configurations
-var env = process.env.NODE_ENV || 'LOCAL';
+var env = process.env.NODE_ENV || 'TEST';
 var sqlConfig = require('./config')[env];
 
 
@@ -160,7 +160,7 @@ app.post('/api/transactions', async (req, res) => {
             .query('INSERT INTO [apiTransactions] (tableName, apiRequestType, status, numRows, datePosted) VALUES (@tableName, @apiRequestType, @status, @numRows, @datePosted)');
 
         //Sends the response data as JSON to the user
-        res.status(200).send("POST Success!");
+        res.status(200).send("POST to API Transactions Success!");
 
     } catch (err) {
         console.error(err.message);
